@@ -172,4 +172,24 @@
             >;
         };
     };
+
+    zip_joystick_arrows: zip_joystick_arrows {
+        compatible = "zmk,input-processor-keybind";
+        #input-processor-cells = <0>;
+        bindings = <&kp RIGHT>,
+                  <&kp LEFT>,
+                  <&kp DOWN>,
+                  <&kp UP>;
+        mode = <1>;
+        continuous_key_press;
+        tick = <12>;
+        threshold = <2>;
+        tap-ms = <5>;
+    };
+
+    joystick_listener {
+        compatible = "zmk,input-listener";
+        device = <&joystick_anin>;
+        input-processors = <&zip_joystick_arrows>;
+    };
 };

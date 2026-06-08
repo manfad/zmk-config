@@ -1,11 +1,13 @@
 /*
- * Joystick on LEFT half (central / USB side)
+ * Joystick hardware on LEFT half (central / USB side)
  *
  * Wiring (nice!nano / nRF52840):
  *   VCC -> 3V3
  *   GND -> GND
  *   VRx -> P0.02  (ADC channel 0)
  *   VRy -> P0.29  (ADC channel 5)
+ *
+ * Arrow key mapping is in cradio.keymap (needs keys.h preprocessing).
  */
 
 #include <zephyr/dt-bindings/input/input-event-codes.h>
@@ -39,25 +41,5 @@
 			evt-type = <INPUT_EV_REL>;
 			input-code = <INPUT_REL_Y>;
 		};
-	};
-
-	zip_joystick_arrows: zip_joystick_arrows {
-		compatible = "zmk,input-processor-keybind";
-		#input-processor-cells = <0>;
-		bindings = <&kp RIGHT>,
-			  <&kp LEFT>,
-			  <&kp DOWN>,
-			  <&kp UP>;
-		mode = <1>;
-		continuous_key_press;
-		tick = <12>;
-		threshold = <2>;
-		tap-ms = <5>;
-	};
-
-	joystick_listener {
-		compatible = "zmk,input-listener";
-		device = <&joystick_anin>;
-		input-processors = <&zip_joystick_arrows>;
 	};
 };
