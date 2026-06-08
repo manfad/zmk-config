@@ -39,10 +39,10 @@
 	zip_joystick_arrows: zip_joystick_arrows {
 		compatible = "zmk,input-processor-keybind";
 		#input-processor-cells = <0>;
-		bindings = <&kp RIGHT_ARROW>,
-			  <&kp LEFT_ARROW>,
-			  <&kp DOWN_ARROW>,
-			  <&kp UP_ARROW>;
+		bindings = <&kp RIGHT>,
+			  <&kp LEFT>,
+			  <&kp DOWN>,
+			  <&kp UP>;
 		mode = <1>;
 		continuous_key_press;
 		tick = <12>;
