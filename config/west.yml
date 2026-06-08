@@ -2,10 +2,12 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    # Additional modules containing boards/shields/custom code can be listed here as well
-    # See https://docs.zephyrproject.org/3.2.0/develop/west/manifest.html#projects
     - name: nxtkb
       url-base: https://github.com/nxtkb
+    - name: badjeff
+      url-base: https://github.com/badjeff
+    - name: zettaface
+      url-base: https://github.com/zettaface
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -15,5 +17,11 @@ manifest:
       remote: nxtkb
       revision: main
       import: west.yml
+    - name: zmk-analog-input-driver
+      remote: badjeff
+      revision: main
+    - name: zmk-input-processor-keybind
+      remote: zettaface
+      revision: main
   self:
     path: config

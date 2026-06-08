@@ -1,0 +1,33 @@
+/*
+ * Use this as cradio_left.overlay ONLY when joystick is on the RIGHT half.
+ * The left (USB) half receives stick events over the split and maps to arrows.
+ */
+
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+	zip_joystick_arrows: zip_joystick_arrows {
+		compatible = "zmk,input-processor-keybind";
+		#input-processor-cells = <0>;
+		bindings = <&kp RIGHT_ARROW>,
+			  <&kp LEFT_ARROW>,
+			  <&kp DOWN_ARROW>,
+			  <&kp UP_ARROW>;
+		mode = <1>;
+		continuous_key_press;
+		tick = <12>;
+		threshold = <2>;
+		tap-ms = <5>;
+	};
+
+	joystick_split: joystick_split {
+		compatible = "zmk,input-split";
+		reg = <0>;
+	};
+
+	joystick_listener {
+		compatible = "zmk,input-listener";
+		device = <&joystick_split>;
+		input-processors = <&zip_joystick_arrows>;
+	};
+};

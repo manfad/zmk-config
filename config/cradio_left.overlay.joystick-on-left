@@ -1,0 +1,58 @@
+/*
+ * ALTERNATIVE: use this ONLY if the joystick is soldered on the LEFT half.
+ * (This is the same as the active cradio_left.overlay — kept for reference.)
+ */
+
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+&adc {
+	status = "okay";
+};
+
+/ {
+	joystick_anin: analog_input_0 {
+		compatible = "zmk,analog-input";
+		sampling-hz = <50>;
+		x-ch {
+			io-channels = <&adc 0>;
+			mv-mid = <1650>;
+			mv-min-max = <1600>;
+			mv-deadzone = <80>;
+			scale-multiplier = <1>;
+			scale-divisor = <45>;
+			evt-type = <INPUT_EV_REL>;
+			input-code = <INPUT_REL_X>;
+		};
+		y-ch {
+			io-channels = <&adc 5>;
+			mv-mid = <1650>;
+			mv-min-max = <1600>;
+			mv-deadzone = <80>;
+			scale-multiplier = <1>;
+			scale-divisor = <45>;
+			invert;
+			evt-type = <INPUT_EV_REL>;
+			input-code = <INPUT_REL_Y>;
+		};
+	};
+
+	zip_joystick_arrows: zip_joystick_arrows {
+		compatible = "zmk,input-processor-keybind";
+		#input-processor-cells = <0>;
+		bindings = <&kp RIGHT_ARROW>,
+			  <&kp LEFT_ARROW>,
+			  <&kp DOWN_ARROW>,
+			  <&kp UP_ARROW>;
+		mode = <1>;
+		continuous_key_press;
+		tick = <12>;
+		threshold = <2>;
+		tap-ms = <5>;
+	};
+
+	joystick_listener {
+		compatible = "zmk,input-listener";
+		device = <&joystick_anin>;
+		input-processors = <&zip_joystick_arrows>;
+	};
+};

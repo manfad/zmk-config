@@ -1,0 +1,46 @@
+/*
+ * Use this ONLY if the joystick is on the RIGHT half.
+ *
+ * 1. Rename to cradio_right.overlay
+ * 2. Replace cradio_left.overlay with cradio_left.overlay.joystick-on-left
+ */
+
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+&adc {
+	status = "okay";
+};
+
+/ {
+	joystick_anin: analog_input_0 {
+		compatible = "zmk,analog-input";
+		sampling-hz = <50>;
+		x-ch {
+			io-channels = <&adc 0>;
+			mv-mid = <1650>;
+			mv-min-max = <1600>;
+			mv-deadzone = <80>;
+			scale-multiplier = <1>;
+			scale-divisor = <45>;
+			evt-type = <INPUT_EV_REL>;
+			input-code = <INPUT_REL_X>;
+		};
+		y-ch {
+			io-channels = <&adc 5>;
+			mv-mid = <1650>;
+			mv-min-max = <1600>;
+			mv-deadzone = <80>;
+			scale-multiplier = <1>;
+			scale-divisor = <45>;
+			invert;
+			evt-type = <INPUT_EV_REL>;
+			input-code = <INPUT_REL_Y>;
+		};
+	};
+
+	joystick_split: joystick_split {
+		compatible = "zmk,input-split";
+		reg = <0>;
+		device = <&joystick_anin>;
+	};
+};
